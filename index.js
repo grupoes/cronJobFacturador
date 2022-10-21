@@ -61,7 +61,7 @@ function verificar_si_existe(connection, data, callback) {
 }
 
 function readVentas(connection, callback) {
-    connection.query("SELECT *, contribuyente.razon_social as empresa, contribuyente.nombre_comercial as nombreComercial, contribuyente.direccion_fiscal as direccion_empresa FROM doc_electronico INNER JOIN contribuyente ON contribuyente.id_contribuyente = doc_electronico.id_contribuyente INNER JOIN sunat_codigoubigeo ON sunat_codigoubigeo.codigo_ubigeo = contribuyente.codigo_ubigeo INNER JOIN cliente ON cliente.idcliente = doc_electronico.idcliente INNER JOIN sucursal ON sucursal.id_contribuyente = contribuyente.id_contribuyente WHERE doc_electronico.id_contribuyente = 50 AND (doc_electronico.id_tipodoc_electronico = '03' OR  doc_electronico.id_tipodoc_electronico = '03') AND doc_electronico.tipo_envio_sunat = 'produccion' AND (doc_electronico.estado_envio_sunat = 'pendiente' OR doc_electronico.estado_envio_sunat = 'ticket') LIMIT 0,1", function(err, result) {
+    connection.query("SELECT *, contribuyente.razon_social as empresa, contribuyente.nombre_comercial as nombreComercial, contribuyente.direccion_fiscal as direccion_empresa FROM doc_electronico INNER JOIN contribuyente ON contribuyente.id_contribuyente = doc_electronico.id_contribuyente INNER JOIN sunat_codigoubigeo ON sunat_codigoubigeo.codigo_ubigeo = contribuyente.codigo_ubigeo INNER JOIN cliente ON cliente.idcliente = doc_electronico.idcliente INNER JOIN sucursal ON sucursal.id_contribuyente = contribuyente.id_contribuyente WHERE  (doc_electronico.id_tipodoc_electronico = '03' OR  doc_electronico.id_tipodoc_electronico = '03') AND doc_electronico.tipo_envio_sunat = 'produccion' AND (doc_electronico.estado_envio_sunat = 'pendiente' OR doc_electronico.estado_envio_sunat = 'ticket') LIMIT 0,1", function(err, result) {
         if(err) throw err;
         callback(result);
     });
@@ -435,6 +435,7 @@ cron.schedule('*/2 * * * *', () => {
                         console.log(response.data);
                         console.log(venta.numero_comprobante);
                         console.log('ticket');
+                        console.log(venta.empresa);
                         const res = response.data;
 
                         if (res.respuesta === 'ok') {
@@ -580,6 +581,7 @@ cron.schedule('*/2 * * * *', () => {
                                         console.log(response.data);
                                         console.log(venta.numero_comprobante);
                                         console.log('pendiente');
+                                        console.log(venta.empresa);
                                         const res = response.data;
                 
                                         if (res.respuesta === 'ok') {
