@@ -1,0 +1,25 @@
+{
+  "name": "cron-job-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "express": "^4.17.1",
+    "latin-numeros-a-letras.js": "^0.1.0",
+    "mysql": "^2.18.1",
+    "node-cron": "^3.0.0",
+    "node-fetch": "^3.2.10",
+    "numero-a-letras": "^1.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
