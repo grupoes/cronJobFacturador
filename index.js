@@ -5,18 +5,6 @@ const convertir = require('numero-a-letras');
 
 const axios = require('axios').default;
 
-const connection = mysql.createConnection({
-    host: "192.196.159.78",
-    user: "esfacturado_reporte",
-    password: "contabilidad123",
-    database: "esfactur_bd_sys"
-});
-
-connection.connect((err) => {
-    if(err) throw err;
-    console.log("Connected to database");
-});
-
 function traer_secuencia_resumen_boletas(connection, data, callback) {
     connection.query("SELECT COUNT(*) as resumenes FROM resumen_boletas WHERE id_contribuyente = " + data.id_contribuyente + " AND serie = "+data.serie + " AND tipo_envio_sunat = '"+ data.tipo_envio_sunat+" ' ",function(err,result){
         if(err) throw err;
@@ -303,6 +291,18 @@ function envio_facturas(data) {
 }
 
 cron.schedule('*/2 * * * *', () => {
+
+    const connection = mysql.createConnection({
+        host: "192.196.159.78",
+        user: "esfacturado_reporte",
+        password: "contabilidad123",
+        database: "esfactur_bd_sys"
+    });
+    
+    connection.connect((err) => {
+        if(err) throw err;
+        console.log("Connected to database");
+    });
 
     readVentas(connection, (result) => {
         //const ruta = "https://esconsultoresyasesores.com/sis_facturacion/api_facturacion/resumen_boletas.php";
